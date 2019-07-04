@@ -148,8 +148,17 @@ MonoBehaviour:
   - operations:
     - action: MinionBall
       count: 3
+      delay: 0
     - action: ShadowWall
       count: 1
+      delay: 2
+  - operations:
+    - action: MinionBall
+      count: 1
+      delay: 0
+    - action: ShadowWall
+      count: 1
+      delay: 0
 --- !u!4 &140838760
 Transform:
   m_ObjectHideFlags: 0

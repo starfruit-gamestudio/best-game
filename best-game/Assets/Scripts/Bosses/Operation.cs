@@ -8,6 +8,7 @@ public class Operation
 {
     [SerializeField] string action;
     [SerializeField] int count;
+    [SerializeField] float delay;
 
     public string GetAction()
     {
@@ -16,5 +17,9 @@ public class Operation
     public int GetCount()
     {
         return count;
+    }
+    public float GetDelay()
+    {
+        return delay;
     }
 }

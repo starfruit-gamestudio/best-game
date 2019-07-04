@@ -6,16 +6,18 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+    [Header("Boss Config")]
     [SerializeField] protected int life;
     [SerializeField] protected int actualLife;
     [SerializeField] protected int damage;
     [SerializeField] protected List<Stage> stages;
-    List<string> actionQueue;
+    [SerializeField]List<Operation> actionQueue;
     bool alive;
     bool abort;
     protected bool busy;
     int runningStage;
     int indexAction;
+    protected Type child;
 
     // Start is called before the first frame update
     protected void Start()
@@ -36,7 +38,7 @@ public class Boss : MonoBehaviour
             busy = true;
             if(abort)
                 abort = false;
-            ExecuteMethod(actionQueue[indexAction]);
+            StartCoroutine (ExecuteMethod(actionQueue[indexAction]));
             indexAction++;
             if (indexAction == actionQueue.Count)
             {
@@ -48,20 +50,20 @@ public class Boss : MonoBehaviour
     protected void GetActionQueue()
     {
         runningStage = GetCurrentStage();
-        actionQueue = new List<string>();
+        actionQueue = new List<Operation>();
         foreach (Operation op in stages[runningStage].GetOperation())
         {
             for (int i = 0; i < op.GetCount(); i++)
             {
-                actionQueue.Add(op.GetAction());
+                actionQueue.Add(op);
             }
         }
     }
 
-    protected void ExecuteMethod(string method)
+    protected IEnumerator ExecuteMethod(Operation method)
     {
-        Type type = typeof(NewMoon);
-        MethodInfo methodInfo = type.GetMethod(method);
+        yield return new WaitForSeconds(method.GetDelay());
+        MethodInfo methodInfo = child.GetMethod(method.GetAction());
         string result = (string)methodInfo.Invoke(this, null);
     }
 
