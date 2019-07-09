@@ -18,6 +18,11 @@ public class NewMoon : Boss
 
     [SerializeField] float speed;
     [SerializeField] float travelTime;
+    [Header("Ball Config")]
+    [SerializeField] float ballSpeed;
+    [SerializeField] float ballSpawnDelay;
+    [SerializeField] int ballDamage;
+    [SerializeField] GameObject ballPrefab;
     System.Random random;
     PathFollower pathFollower;
     // Start is called before the first frame update
@@ -184,16 +189,42 @@ public class NewMoon : Boss
     //Minion
     public void MinionBall()
     {
-        StartCoroutine(SpawnMinionBall());
+        if (GetCurrentStage() == 0)
+        {
+            StartCoroutine(SpawnMinionBall());
+        }
+        else if (GetCurrentStage() == 1)
+        {
+            Debug.Log("Estagio 2");
+            StartCoroutine(SpawnMinionBall(new Vector3(0,0,0), 45));
+            StartCoroutine(SpawnMinionBall(new Vector3(0, 0, 0), -45));
+            StartCoroutine(SpawnMinionBall(new Vector3(0, 0, 0)));
+        }
+        
     }
-
     
     IEnumerator SpawnMinionBall()
     {
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("BALL");
+        yield return new WaitForSeconds(ballSpawnDelay);
+        MinionBall _ball = Instantiate(ballPrefab, transform.position,Quaternion.identity).GetComponent<MinionBall>();
+        _ball.Fire(ballSpeed);
         busy = false;
     }
-    
+    IEnumerator SpawnMinionBall(Vector3 target)
+    {
+        yield return new WaitForSeconds(ballSpawnDelay);
+        MinionBall _ball = Instantiate(ballPrefab, transform.position, Quaternion.identity).GetComponent<MinionBall>();
+        _ball.Fire(ballSpeed, target);
+        busy = false;
+    }
+    IEnumerator SpawnMinionBall(Vector3 target, float euler)
+    {
+        yield return new WaitForSeconds(ballSpawnDelay);
+        Debug.Log("Spawnou");
+        MinionBall _ball = Instantiate(ballPrefab, transform.position, Quaternion.identity).GetComponent<MinionBall>();
+        _ball.Fire(ballSpeed, target,euler);
+        busy = false;
+    }
+
 
 }
