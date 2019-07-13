@@ -22,6 +22,7 @@ public class NewMoon : Boss
     [SerializeField] float ballSpeed;
     [SerializeField] float ballSpawnDelay;
     [SerializeField] int ballDamage;
+    [SerializeField] float angleBall;
     [SerializeField] GameObject ballPrefab;
     System.Random random;
     PathFollower pathFollower;
@@ -189,40 +190,26 @@ public class NewMoon : Boss
     //Minion
     public void MinionBall()
     {
+        Vector3 aim = transform.GetChild(0).eulerAngles;
         if (GetCurrentStage() == 0)
         {
-            StartCoroutine(SpawnMinionBall());
+            StartCoroutine(SpawnMinionBall(aim));
         }
         else if (GetCurrentStage() == 1)
         {
             Debug.Log("Estagio 2");
-            StartCoroutine(SpawnMinionBall(new Vector3(0,0,0), 45));
-            StartCoroutine(SpawnMinionBall(new Vector3(0, 0, 0), -45));
-            StartCoroutine(SpawnMinionBall(new Vector3(0, 0, 0)));
+            StartCoroutine(SpawnMinionBall(aim));
+            StartCoroutine(SpawnMinionBall(aim + new Vector3(0, 0, angleBall)));
+            StartCoroutine(SpawnMinionBall(aim + new Vector3(0, 0, -angleBall)));
         }
-        
     }
     
-    IEnumerator SpawnMinionBall()
-    {
-        yield return new WaitForSeconds(ballSpawnDelay);
-        MinionBall _ball = Instantiate(ballPrefab, transform.position,Quaternion.identity).GetComponent<MinionBall>();
-        _ball.Fire(ballSpeed);
-        busy = false;
-    }
-    IEnumerator SpawnMinionBall(Vector3 target)
-    {
-        yield return new WaitForSeconds(ballSpawnDelay);
-        MinionBall _ball = Instantiate(ballPrefab, transform.position, Quaternion.identity).GetComponent<MinionBall>();
-        _ball.Fire(ballSpeed, target);
-        busy = false;
-    }
-    IEnumerator SpawnMinionBall(Vector3 target, float euler)
+    IEnumerator SpawnMinionBall(Vector3 euler)
     {
         yield return new WaitForSeconds(ballSpawnDelay);
         Debug.Log("Spawnou");
         MinionBall _ball = Instantiate(ballPrefab, transform.position, Quaternion.identity).GetComponent<MinionBall>();
-        _ball.Fire(ballSpeed, target,euler);
+        _ball.Fire(ballSpeed,euler);
         busy = false;
     }
 

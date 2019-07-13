@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4377711314316126805}
   - component: {fileID: 2153716965136300066}
   - component: {fileID: 566766983864519421}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MinionBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,13 +109,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!58 &566766983864519421
 CircleCollider2D:
   m_ObjectHideFlags: 0
