@@ -156,11 +156,11 @@ MonoBehaviour:
       delay: 2
   - operations:
     - action: MinionBall
-      count: 1
-      delay: 0
+      count: 2
+      delay: 1
     - action: ShadowWall
       count: 1
-      delay: 0
+      delay: 3
   actionQueue: []
   WallPrefab: {fileID: 3416472710846454952, guid: 318a36cae3d39864597178c500b2e422,
     type: 3}
@@ -179,9 +179,10 @@ MonoBehaviour:
   ballSpeed: 20
   ballSpawnDelay: 1
   ballDamage: 1
-  angleBall: 25
+  angleBall: 10
   ballPrefab: {fileID: 5634630137210325073, guid: e0175ddb4bde432479b49eb71ead674b,
     type: 3}
+  target: {x: 0, y: 0, z: 0}
 --- !u!4 &140838760
 Transform:
   m_ObjectHideFlags: 0

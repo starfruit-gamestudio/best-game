@@ -26,9 +26,14 @@ public class NewMoon : Boss
     [SerializeField] GameObject ballPrefab;
     System.Random random;
     PathFollower pathFollower;
+    Transform aim;
+
+    [Header("Debug")]
+    [SerializeField] Vector3 target;
     // Start is called before the first frame update
     void Start()
     {
+        aim = transform.GetChild(0);
         pathFollower = GetComponent<PathFollower>();
         random = new System.Random();
         child = GetType();
@@ -190,17 +195,17 @@ public class NewMoon : Boss
     //Minion
     public void MinionBall()
     {
-        Vector3 aim = transform.GetChild(0).eulerAngles;
+        AttAimPos();
         if (GetCurrentStage() == 0)
         {
-            StartCoroutine(SpawnMinionBall(aim));
+            StartCoroutine(SpawnMinionBall(aim.eulerAngles));
         }
         else if (GetCurrentStage() == 1)
         {
             Debug.Log("Estagio 2");
-            StartCoroutine(SpawnMinionBall(aim));
-            StartCoroutine(SpawnMinionBall(aim + new Vector3(0, 0, angleBall)));
-            StartCoroutine(SpawnMinionBall(aim + new Vector3(0, 0, -angleBall)));
+            StartCoroutine(SpawnMinionBall(aim.eulerAngles));
+            StartCoroutine(SpawnMinionBall(aim.eulerAngles + new Vector3(0, 0, angleBall)));
+            StartCoroutine(SpawnMinionBall(aim.eulerAngles + new Vector3(0, 0, -angleBall)));
         }
     }
     
@@ -213,5 +218,9 @@ public class NewMoon : Boss
         busy = false;
     }
 
+    void AttAimPos()
+    {
+        aim.right = target - aim.position;
+    }
 
 }
